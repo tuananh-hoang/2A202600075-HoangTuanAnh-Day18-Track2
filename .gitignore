@@ -12,3 +12,7 @@ derby.log
 _lakehouse/
 notebooks/*.ipynb
 notebooks-spark/*.ipynb
+
+lakehouse/
+__pycache__/
+*.pyc
