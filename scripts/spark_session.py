@@ -21,10 +21,10 @@ def get_spark(app_name: str = "lakehouse-lab") -> SparkSession:
         .config("spark.hadoop.fs.s3a.access.key", "minioadmin")
         .config("spark.hadoop.fs.s3a.secret.key", "minioadmin")
         .config("spark.hadoop.fs.s3a.path.style.access", "true")
-        .config(
-            "spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem"
-        )
+        .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
         .config("spark.sql.shuffle.partitions", "8")
+        .config("spark.driver.memory", "2g")
+        .config("spark.executor.memory", "2g")
     )
     return configure_spark_with_delta_pip(
         builder,

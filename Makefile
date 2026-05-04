@@ -49,10 +49,10 @@ spark-up: ## [spark] Start MinIO + Spark/Jupyter (Docker — first run pulls ~2 
 	@echo "  MinIO   → http://localhost:9001 (minioadmin / minioadmin)"
 
 spark-smoke: ## [spark] Smoke test inside Spark container
-	$(COMPOSE) exec -T spark python /workspace/scripts/verify.py
+	$(COMPOSE) exec -T -e PYTHONPATH="/workspace/scripts" spark bash -c 'source /usr/local/bin/before-notebook.d/10activate-conda-env.sh 2>/dev/null || true; source /usr/local/bin/before-notebook.d/10spark-config.sh 2>/dev/null || true; export PYTHONPATH="/workspace/scripts:$$PYTHONPATH"; python /workspace/scripts/verify.py'
 
 spark-data: ## [spark] Generate 1M-row Bronze (Spark version)
-	$(COMPOSE) exec -T spark python /workspace/scripts/generate_data.py
+	$(COMPOSE) exec -T -e PYTHONPATH="/workspace/scripts" spark bash -c 'source /usr/local/bin/before-notebook.d/10activate-conda-env.sh 2>/dev/null || true; source /usr/local/bin/before-notebook.d/10spark-config.sh 2>/dev/null || true; export PYTHONPATH="/workspace/scripts:$$PYTHONPATH"; python /workspace/scripts/generate_data.py'
 
 spark-down: ## [spark] Stop Docker stack (data persists)
 	$(COMPOSE) down
